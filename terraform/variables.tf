@@ -40,6 +40,12 @@ variable "service_launch_type" {
   }))
 }
 
+variable "container_image" {
+  type        = string
+  description = "URI da imagem do contêiner que será usada para executar o serviço."
+  
+}
+
 variable "service_hosts" {
   type        = list(string)
   description = "Lista de endereços ou nomes de host atribuídos ao serviço para balanceamento de carga ou exposição."
