@@ -65,7 +65,7 @@ service_healthcheck = {
 
 scale_type   = "requests_tracking"
 task_minimum = 3
-task_maximum = 12
+task_maximum = 6
 
 ### Autoscaling de CPU
 
