@@ -1,9 +1,7 @@
 name: CI/CD Pipeline - Dev
 
 on:
-  push:
-    branches:
-      - dev
+  workflow_dispatch:
 
 env:
   AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT_ID }}

@@ -2,9 +2,7 @@ name: Terraform Destroy - Manual
 
 on:
     workflow_dispatch:
-    push:
-      branches:
-        - dev  
+
 
 env:
   AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT_ID }}
