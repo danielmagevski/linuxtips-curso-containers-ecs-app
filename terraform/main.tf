@@ -1,5 +1,5 @@
 module "service" {
-  source                      = "github.com/danielmagevski/linuxtips-curso-containers-ecs-service-module?ref=v1"
+  source                      = "github.com/msfidelis/linuxtips-curso-containers-ecs-service-module"
   region                      = var.region
   cluster_name                = var.cluster_name
   service_name                = var.service_name
@@ -12,7 +12,8 @@ module "service" {
   service_launch_type         = var.service_launch_type
   service_task_count          = var.service_task_count
   service_hosts               = var.service_hosts
-  container_image             = var.container_image
+
+  container_image = var.container_image
 
   environment_variables = var.environment_variables
 
@@ -23,6 +24,16 @@ module "service" {
     data.aws_ssm_parameter.private_subnet_1.value,
     data.aws_ssm_parameter.private_subnet_2.value,
     data.aws_ssm_parameter.private_subnet_3.value,
+  ]
+
+  efs_volumes = [
+    {
+      volume_name      = "volume-de-exemplo"
+      file_system_id   = aws_efs_file_system.main.id
+      file_system_root = "/"
+      mount_point      = "/mnt/efs"
+      read_only        = false
+    }
   ]
 
   # Autoscaling
