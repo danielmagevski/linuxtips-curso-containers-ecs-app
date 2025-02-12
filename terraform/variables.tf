@@ -40,11 +40,8 @@ variable "service_launch_type" {
   }))
 }
 
-variable "container_image" {
-  type        = string
-  description = "URI da imagem do contêiner que será usada para executar o serviço."
 
-}
+variable "container_image" {}
 
 variable "service_hosts" {
   type        = list(string)

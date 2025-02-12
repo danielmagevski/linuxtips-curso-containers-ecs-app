@@ -6,8 +6,7 @@ service_name = "linuxtips-app"
 
 service_port = 8080
 
-service_cpu = 256
-
+service_cpu    = 256
 service_memory = 512
 
 service_launch_type = [
@@ -65,7 +64,7 @@ service_healthcheck = {
 
 scale_type   = "requests_tracking"
 task_minimum = 3
-task_maximum = 6
+task_maximum = 12
 
 ### Autoscaling de CPU
 
