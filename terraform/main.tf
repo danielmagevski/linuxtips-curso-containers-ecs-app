@@ -1,5 +1,5 @@
 module "service" {
-  source                      = "/Users/daniel/Documents/GitHub/linuxtips-curso-containers-ecs-service-module"
+  source                      = "github.com/danielmagevski/linuxtips-curso-containers-ecs-service-module?ref=v1.3.0"
   region                      = var.region
   cluster_name                = var.cluster_name
   service_name                = var.service_name
@@ -13,7 +13,20 @@ module "service" {
   service_task_count          = var.service_task_count
   service_hosts               = var.service_hosts
 
+  container_image = var.container_image
+
   environment_variables = var.environment_variables
+
+  secrets = [
+    {
+      name      = "VARIAVEL_COM_VALOR_DO_SSM"
+      valueFrom = aws_ssm_parameter.teste.arn
+    },
+    {
+      name      = "VARIAVEL_COM_VALOR_DO_SECRETS"
+      valueFrom = aws_secretsmanager_secret.teste.arn
+    }
+  ]
 
   capabilities = var.capabilities
 
@@ -22,6 +35,16 @@ module "service" {
     data.aws_ssm_parameter.private_subnet_1.value,
     data.aws_ssm_parameter.private_subnet_2.value,
     data.aws_ssm_parameter.private_subnet_3.value,
+  ]
+
+  efs_volumes = [
+    {
+      volume_name      = "volume-de-exemplo"
+      file_system_id   = aws_efs_file_system.main.id
+      file_system_root = "/"
+      mount_point      = "/mnt/efs"
+      read_only        = false
+    }
   ]
 
   # Autoscaling
@@ -49,8 +72,10 @@ module "service" {
   scale_in_evaluation_periods  = var.scale_in_evaluation_periods
   scale_in_cooldown            = var.scale_in_cooldown
 
-  scale_tracking_cpu           = var.scale_tracking_cpu
+  scale_tracking_cpu = var.scale_tracking_cpu
 
-  alb_arn                      = data.aws_ssm_parameter.alb.value
-  scale_tracking_requests      = var.scale_tracking_requests
+  alb_arn                 = data.aws_ssm_parameter.alb.value
+  scale_tracking_requests = var.scale_tracking_requests
+
+  service_discovery_namespace = data.aws_ssm_parameter.service_discovery_namespace.value
 }

@@ -40,6 +40,9 @@ variable "service_launch_type" {
   }))
 }
 
+
+variable "container_image" {}
+
 variable "service_hosts" {
   type        = list(string)
   description = "Lista de endereços ou nomes de host atribuídos ao serviço para balanceamento de carga ou exposição."
@@ -132,3 +135,7 @@ variable "scale_tracking_cpu" {}
 
 ### Tracking Requests
 variable "scale_tracking_requests" {}
+
+### Service Discovery
+
+variable "ssm_service_discovery_namespace" {}
